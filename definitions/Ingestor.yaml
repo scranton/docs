@@ -1,0 +1,39 @@
+properties:
+  name:
+    description: The name of the ingestor.
+    type: string
+  cloud_ingestor:
+    description: Defines where the ingestor is defined.
+    type: boolean
+  listener_type:
+    description: The listener type.
+    type: string
+  listener:
+    description: The listener object.
+    type: object
+  handler_type:
+    description: The handler type.
+    type: string
+  handler:
+    description: The handler object.
+    type: object
+  translator_id:
+    description: The id of the Translator associated with this ingestor.
+    type: string
+  device_ids:
+    description: The ids of the Devices associated with this ingestor.
+    type: array
+    items:
+      type: string
+  device_type_ids:
+    description: The ids of the Device Types associated with this ingestor.
+    type: array
+    items:
+      type: string
+required:
+- name
+- listener_type
+- listener
+- handler_type
+- handler
+- translator_id

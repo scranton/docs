@@ -1,0 +1,55 @@
+title: Abilities
+description: An object describing the permission levels for the various features in the system
+type: object
+properties:
+  audit:
+    type: object
+    $ref: abilities/Audit.yaml
+  command:
+    type: object
+    $ref: abilities/Command.yaml
+  company:
+    type: object
+    $ref: abilities/Company.yaml
+  device:
+    type: object
+    $ref: abilities/Device.yaml
+  device_type:
+    type: object
+    $ref: abilities/DeviceType.yaml
+  device_config:
+    type: string
+    description: Deprecated, unused
+  device_error:
+    type: object
+    $ref: abilities/DeviceError.yaml
+  gateway_command:
+    type: object
+    $ref: abilities/GatewayCommand.yaml
+  ingestor:
+    type: object
+    $ref: abilities/Ingestor.yaml
+  integration:
+    type: object
+    $ref: abilities/Integration.yaml
+  notification:
+    type: object
+    $ref: abilities/Notification.yaml
+  report:
+    type: object
+    $ref: abilities/Report.yaml
+  rule:
+    type: object
+    $ref: abilities/Rule.yaml
+  software_update:
+    type: object
+    $ref: abilities/SoftwareUpdate.yaml
+  translator:
+    type: object
+    $ref: abilities/Translator.yaml
+  user:
+    type: object
+    $ref: abilities/User.yaml
+  user_type:
+    type: object
+    $ref: abilities/UserType.yaml

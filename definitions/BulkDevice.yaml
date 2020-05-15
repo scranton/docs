@@ -1,0 +1,29 @@
+title: BulkDevice
+description: Devices are instances of Device Types. Through the API you are able to manage and send actions to Devices.
+type: object
+properties:
+  name_prefix:
+    description: Devices' name field will be generated as "[name_prefix][unique_id]".
+    type: string
+  unique_ids:
+    description: An array of unique identifiers, one for each Device to be created. These will uniquely identify the gateways when they request their configuration from the cloud.
+    type: array
+  active:
+    description: Indicates whether or not the Device is available.
+    type: boolean
+  device_type_id:
+    description: The _id of the Device Type
+    type: string
+  connection_id:
+    description: The _id of the gateway configuration.
+    type: string
+  heartbeat_period:
+    description: The interval (in seconds) that the heartbeat message will be sent.
+    type: integer
+  heartbeat_values:
+    description: An array of strings indicating what values should be included in the heartbeat message.
+    items:
+      type: array
+required:
+- unique_ids
+- device_type_id

@@ -1,0 +1,15 @@
+title: RuleCondition
+description: A boolean condition that is run against a report payload. In a rule condition, when specifying the payload field to inspect, dot notation may be used for nested fields. Parent_or_sibling_key/value may be used for finding nested fields that may be in arrays.
+type: object
+properties:
+  parent_or_sibling_key:
+    description: The payload key that will indicate if we are in the correct part of the structure for the given property being evaluated.
+    type: string
+  parent_or_sibling_value:
+    description: The value of the parent_or_sibling_key that will indicate we're int he correct part of the payload structure.
+    type: string
+  type:
+    description: The actual type of rule condition.
+    $ref: RuleType.yaml
+required:
+- type

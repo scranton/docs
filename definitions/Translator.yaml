@@ -1,0 +1,19 @@
+properties:
+  name:
+    description: The unique name of the translator.
+    type: string
+  type:
+    description: The translator type.
+    type: string
+  cloud_translator:
+    description: Defines where the translator is defined.
+    type: boolean
+  script:
+    description: The escaped string of the translator script.
+    type: string
+  options:
+    description: Translator options (JSON object or array).
+    type: object/array
+required:
+- name
+- type

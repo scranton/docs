@@ -1,0 +1,10 @@
+title: BulkDelete
+description: Delete multiple resources with one request
+type: object
+properties:
+  ids:
+    description: An array of IDs to be deleted
+    items:
+      type: array
+required:
+- ids

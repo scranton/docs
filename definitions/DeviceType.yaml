@@ -1,0 +1,41 @@
+title: DeviceType
+description: Device Types describe abstract devices. There are many concrete instances of a device type, described by a Device. Each device make/model should have a unique Device Type.
+type: object
+properties:
+  name:
+    description: The name of the Device Type. Must be unique among the owner's
+      Device Types.
+    type: string
+  manufacturer:
+    description: Used to describe the Device Type manufacturer.
+    type: string
+  model:
+    description: Used to describe the Device Type model.
+    type: string
+  type:
+    description: Gives an indication of the greater classification. This is usually
+      associated with a specific translator for inbound reports and outbound commands.
+    type: string
+  long_description:
+    description: Paragraph-form description of the Device Type.
+    type: string
+  active:
+    description: Indicates whether or not the Device Type is available.
+    type: boolean
+  ingestor_ids:
+    description: IDs of associated Ingestors (optional).
+    type: array
+    items:
+      type: string
+  capabilities:
+    $ref: Capabilities.yaml
+  command_ids:
+    description: IDs of associated Commands (optional).
+    type: array
+    items:
+      type: string
+required:
+- name
+- model
+- type
+- long_description

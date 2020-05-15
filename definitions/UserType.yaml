@@ -1,0 +1,21 @@
+title: User Type
+description: A user type defines permission settings for the abilities a user may perform in the system.
+type: object
+properties:
+  _id:
+    description: The unique identifier of the user type. Assigned at creation, uneditable. Must be unique across system.
+    type: string
+  company_id:
+    description: The unique identifier of the company which owns this user type.
+    type: string
+  user_id:
+    description: The user id that created the user type.
+    type: string
+  name:
+    description: The name of the user type.
+    type: string
+  abilities:
+    type: object
+    $ref: Abilities.yaml
+required:
+- name

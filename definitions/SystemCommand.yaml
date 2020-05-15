@@ -1,0 +1,38 @@
+title: SystemCommand
+description: System commands are commands which can be sent to downstream systems
+type: object
+properties:
+  type:
+    description: The type of the command. Currently, only 'https_request' is supported
+    type: string
+  name:
+    description: The name of the command
+    type: string
+  description:
+    description: A description of the command
+    type: string
+  protocol:
+    description: The protocol of the command, for instance 'https'
+    type: string
+  host:
+    description: The host of the command
+    type: string
+  port:
+    description: The port of the command
+    type: string
+  path_template:
+    description: The path template of the command. A template contains named replacement keys which the system will put in place, given a map of variable names and values when creating a system command job.
+    type: string
+  body_template:
+    description: The body template of the command. A template contains named replacement keys which the system will put in place, given a map of variable names and values when creating a system command job.
+    type: string
+  header_template:
+    description: The header template of the command. A template contains named replacement keys which the system will put in place, given a map of variable names and values when creating a system command job.
+    type: string
+  output_variable_templates:
+    description: A map of variable names and templates. Templates will be applied to response body of command, and results stored with the names on the resulting system command job.
+    type: object
+required:
+- name
+
+

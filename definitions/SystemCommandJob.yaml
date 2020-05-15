@@ -1,0 +1,60 @@
+title: SystemCommandJob
+description: System command jobs represent asyncronous jobs which execute a given system command at the related downstream system.
+type: object
+properties:
+  _id:
+    description: The unique identifier of the job.
+    type: string
+  company_id:
+    description: The id of the company this job belongs to.
+    type: string
+  user_id:
+    description: The user id that created the job.
+    type: string
+  created_at:
+    description: The time the job was created.
+    type: string
+  updated_at:
+    description: The time the job was updated.
+    type: string
+  downstream_system_id:
+    description: The id of the parent downstream system.
+    type: string
+  system_command_id:
+    description: The id of the parent system command.
+    type: string
+  template_variables:
+    description: A json object with a key for each template replacement referenced in the templates of the related system command, and a value for each key.
+    type: object
+  status:
+    description: The status of the command. Will be one of: "sent", "complete", "timeout".
+    type: string
+  executed_at:
+    description: The time at which the job transitioned from the "sent" to another status.
+    type: string
+  request_url:
+    description: The URL of the request, with all template replacements applied. Intended for insight and debugging, and will be overwritten by the EdgeIQ system.
+    type: string
+  request_body:
+    description: The body of the request, with all template replacements applied. Intended for insight and debugging, and will be overwritten by the EdgeIQ system.
+    type: string
+  request_headers:
+    description: The headers of the request, with all template replacements applied. Intended for insight and debugging, and will be overwritten by the EdgeIQ system.
+    type: string
+  response_status_code:
+    description: The response code from the downstream system, if applicable.
+    type: string
+  response_body:
+    description: The body of the downstream system's response, if applicable.
+    type: string
+  response_headers:
+    description: The headers of the downstream system's reponse, if applicable.
+    type: string
+  output_variables:
+    description: Variables that are extracted from the response body automatically by the system, according to the output variable templates defined on the system command.
+    type: object
+required:
+- template_replacements
+
+
+

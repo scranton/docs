@@ -1,0 +1,20 @@
+title: Company Abilities
+description: Permissions for abilities pertaining to companies.
+type: object
+properties:
+  create:
+    description: Ability to create companies
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  read:
+    description: Ability to read companies
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  update:
+    description: Ability to update companies
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  delete:
+    description: Ability to delete companies
+    type: string
+    enum: [not_allowed, self, self_and_all_children]

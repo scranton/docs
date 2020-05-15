@@ -1,0 +1,48 @@
+title: Integration
+description: Integrations describe how to connect with third party services so that the EdgeIQ system can interact with those services.
+type: object
+properties:
+  name:
+    description: The unique name of the integration.
+    type: string
+  type:
+    description: The integration type.
+    type: string
+  long_description:
+    description: Detailed description for integration
+    type: string
+  region:
+    description: (AWS) The region of the AWS IoT integration
+    type: string
+  role_arn:
+    description: (AWS) The ARN of the IAM role for the AWS IoT integration
+    type: string
+  external_id:
+    description: (AWS) The external id for the AWS integration
+    type: string
+  iot_hub_hostname:
+    description: (Azure IoT) The hostname of the IoT Hub in Azure IoT
+    type: string
+  access_policy_name:
+    description: (Azure IoT) The name of the access policy in Azure IoT
+    type: string
+  shared_access_key:
+    description: (Azure IoT) The shared access key from Azure IoT
+    type: string
+  org_id:
+    description: (Bluemix IoT) Your Bluemix account's organization id
+    type: string
+  api_key:
+    description: (Bluemix IoT) Your Bluemix account's API key
+    type: string
+  auth_token:
+    description: (Bluemix IoT) Your Bluemix account's Auth token
+    type: string
+  device_ids:
+    description: List of associated Device IDs. The 'device_ids' field cannot be edited. Please assign the Integration to the Device on create of Device.
+    type: array
+    items:
+      type: string
+required:
+- name
+- type

@@ -1,0 +1,19 @@
+title: GatewayCommandSchedule
+description: GatewayCommandSchedules define when a GatewayCommand can be executed
+type: object
+properties:
+  start_datetime:
+    description: The beginning of the execution window
+    type: string
+    format: date-time
+  end_datetime:
+    description: The end of the execution window
+    type: string
+    format: date-time
+  retry_interval:
+    description: Defines when the execution window can be applied again. `daily` creates window the next day, `weekly`
+     creates window the next week (same day of week). If omitted, only the original window will be observed.
+    type: string
+required:
+- start_datetime
+- end_datetime

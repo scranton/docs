@@ -1,0 +1,10 @@
+title: Aliases
+description: Aliases to use instead of some common key words
+type: object
+properties:
+  gateway:
+    description: Companies that would rather see the term "gateway" replaced, for example with "router", can specify the replacement term here.
+    type: string
+  device:
+    description: Deprecated. Has no effect.
+    type: string

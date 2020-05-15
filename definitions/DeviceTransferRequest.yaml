@@ -1,0 +1,31 @@
+title: Device Transfer Request
+description: Devices transfer requests represent a request to transfer devices in escrow from one account to another.
+type: object
+properties:
+  transferred_at:
+    description: The date the transfer was accepted by the destination account.
+    type: string
+  from_company_id:
+    description: The company id of the originating company.
+    type: string
+  to_company_id:
+    description: The company id of the destination company.
+    type: string
+  status:
+    description: Status of the request. One of "pending", "processing", "completed", "error".
+    type: string
+  errors:
+    description: An array of error messages which were encountered during transfer acceptance.
+    type: array
+  device_type_id:
+    description: Optional. If specified during transfer, this will be the device type used to create the devices.
+    type: string
+  device_template_id:
+    description: The template to use when creating devices.
+    type: object
+  escrow_device_ids:
+    description: The ids of the escrow devices the originating company wishes to transfer to the destination company.
+    type: array
+required:
+- escrow_device_ids
+- to_company_id

@@ -1,0 +1,16 @@
+description: Describes a connection interface for a device.
+type: object
+properties:
+  name:
+    description: The name of the connection.
+    type: string
+  type:
+    description: ('ethernet-wan'/'ethernet-lan'/'wifi'/'cellular') - The type of connection.
+    type: string
+  config:
+    description: The configuration for the connection.
+    $ref: Config.yaml
+required:
+- name
+- type
+- config

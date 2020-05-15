@@ -1,0 +1,21 @@
+title: Audit Abilities
+description: Permissions for abilities pertaining to audit logs.
+type: object
+properties:
+  create:
+    description: Ability to create audit logs
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  read:
+    description: Ability to read audit logs
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  update:
+    description: Ability to update audit logs
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  delete:
+    description: Ability to delete audit logs
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+

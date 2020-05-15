@@ -1,0 +1,113 @@
+POST_execute: |
+  Executes a Command via an HTTP `POST`.  Fields that need to be merged into the Command can be added in one of two
+  ways:
+
+  1.  As a JSON object (when `Content-Type` is `application/json`) with fields defined at the appropriate level
+  of nesting.
+
+  1.  Using "dot notation" as form parameters (when `Content-Type` is `x-www-form-urlencoded`).  The value of such
+  a form parameter will get merged into the command at the specified position within the structure.  For example, suppose the saved `payload` of a command looks like this:
+
+  ```json
+  {
+    "a": {
+      "b":
+        "c": {
+          "key1": "foo",
+          "key2": "bar"
+        }
+      }
+    }
+  }
+  ```
+
+  If the following JSON document was sent as the `execute` request body:
+
+  ```json
+  {
+    "a": {
+      "b":
+        "c": {
+          "key2": "bat",
+          "key3": "fuz"
+        },
+        "c2": "baz"
+      }
+    }
+  }
+  ```
+
+  The JSON would be merged into the saved `payload` as follows:
+
+  ```json
+  {
+    "a": {
+      "b":
+        "c": {
+          "key1": "foo",
+          "key2": "bat",
+          "key3": "fuz
+        },
+        "c2": "baz"
+      }
+    }
+  }
+  ```
+
+  When using form params, the exact same merged `payload` would be accomplished by providing keys in "dot notation",
+  with the same values:
+
+  ```
+  payload.a.b.c.key2=bat
+  payload.a.b.c.key3=fuz
+  payload.a.b.c2=baz
+  ```
+
+  Although this example only shows merging into the `payload`, a value can be merged anywhere within the persisted
+  command structure, and will overwrite any value already present.  Also see
+  [Command examples](/examples/commands).
+
+GET_execute: |
+  Executes a Command via an HTTP `GET`.  Fields that need to be merged into the Command can be added using "dot
+  notation" as query parameters.  The value of such a query parameter will get merged into the command at the
+  specified position within the structure.  For example, suppose the saved `payload` of a command looks like this:
+
+  ```json
+  {
+    "a": {
+      "b":
+        "c": {
+          "key1": "foo",
+          "key2": "bar"
+        }
+      }
+    }
+  }
+  ```
+
+  If the following query string was appended to the `execute` request:
+
+  ```
+  ?payload.a.b.c.key2=bat&payload.a.b.c.key3=fuz&payload.a.b.c2=baz
+  ```
+
+  The query string values would be merged into the saved `payload` as follows:
+
+  ```json
+  {
+    "a": {
+      "b":
+        "c": {
+          "key1": "foo",
+          "key2": "bat",
+          "key3": "fuz
+        },
+        "c2": "baz"
+      }
+    }
+  }
+  ```
+
+  Although this example only shows merging into the `payload`, a value can be merged anywhere within the persisted
+  command structure, and will overwrite any value already present.  Also see
+  [this example](/examples/commands#same-example-using-query-params).

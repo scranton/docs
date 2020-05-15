@@ -1,0 +1,10 @@
+title: Widgets
+description: Controls visibility of different widgets in the portal.
+type: object
+properties:
+  software_updates_hidden:
+    description: Whether the software update widget is hidden.
+    type: boolean
+  data_usage_hidden:
+    description: Whether the data usage widget is hidden
+    type: boolean

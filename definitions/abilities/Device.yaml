@@ -1,0 +1,84 @@
+title: Device Abilities
+description: Permissions for abilities pertaining to devices.
+type: object
+properties:
+  create:
+    description: Ability to create devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  read:
+    description: Ability to read devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  update:
+    description: Ability to update devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  delete:
+    description: Ability to delete devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  notification:
+    description: Ability to update devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  enable_data_restriction:
+    description: Ability to send enable data restriction gateway command
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  disable_data_restriction:
+    description: Ability to send disable data restriction gateway command
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  send_config:
+    description: Ability to send configuration to devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  data_restore:
+    description: Ability to restore data on devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  update_edge:
+    description: Ability to update edge on devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  update_firmware:
+    description: Ability to update firmware on devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  restore_backup:
+    description: Ability to restore from backup on devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  backup:
+    description: Ability to back up device
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  log_upload:
+    description: Ability to upload logs from devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  reboot:
+    description: Ability to reboot devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  reset:
+    description: Ability to reset devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  data_reset:
+    description: Ability to reset data on devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  heartbeat:
+    description: Ability to update heartbeat params on devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  software_update:
+    description: Ability to update software on devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  status:
+    description: Ability to requests a status update from devices
+    type: string
+    enum: [not_allowed, self, self_and_all_children]

@@ -1,0 +1,123 @@
+description: Network interface configuration
+type: object
+properties:
+  net_enable:
+    description: (1/0) - Enables/disables connection
+    type: integer
+    format: int64
+  net_ip_assign:
+    description: ('auto'/'static') - Automatic or static IP address assignment
+    type: string
+  net_ip:
+    description: (IPv4) - Static IP address
+    type: string
+  net_mask:
+    description: (IPv4) - Subnet mask
+    type: string
+  net_gateway:
+    description: (IPv4) - Default gateway address
+    type: string
+  net_broadcast:
+    description: (IPv4) - Broadcast address
+    type: string
+  net_nat:
+    description: (1/0) - Enables/disables NAT masquerading
+    type: integer
+    format: int64
+  net_mtu:
+    description: (68-1500) - Maximum Transition Unit (MTU)
+    type: integer
+    format: int64
+  net_metric:
+    description: (0-65535) - Sets ethernet connection's priority relative to other connection's metrics
+    type: integer
+    format: int64
+  net_dns_1:
+    description: (IPv4) - Primary DNS server
+    type: string
+  net_dns_2:
+    description: (IPv4) - Secondary DNS server
+    type: string
+  dhcp_enable:
+    description: (1/0) - Enables/disables DHCP
+    type: integer
+    format: int64
+  dhcp_relay:
+    description: (1/0) - Enables/disables DHCP relay
+    type: integer
+    format: int64
+  dhcp_start:
+    description: (IPv4) - DHCP start address
+    type: string
+  dhcp_end:
+    description: (IPv4) - DHCP end address
+    type: string
+  dhcp_lease:
+    description: (0-2147483647) - DHCP lease time (seconds)
+    type: integer
+    format: int64
+  dhcp_dns_1:
+    description: (IPv4) - Primary DNS server
+    type: string
+  dhcp_dns_2:
+    description: (IPv4) - Secondary DNS server
+    type: string
+  wifi_enable:
+    description: (1/0) - Enables/disables connection
+    type: integer
+    format: int64
+  wifi_mode:
+    description: ('ap'/'bridge') - Access point or bridge WiFi operation mode
+    type: string
+  wifi_ssid:
+    description: Broadcasted SSID in AP mode or SSID in which to connect in bridge mode
+    type: string
+  wifi_auth:
+    description: ('wpa2psk'/'wpapsk') - WiFi authentication type
+    type: string
+  wifi_crypt:
+    description: ('aes'/'tkip') - WiFi encryption type
+    type: string
+  wifi_psk:
+    description: (psk) - WiFi Pre-shared key (password)
+    type: string
+  wifi_channel:
+    description: (1-14) - WiFi channel
+    type: integer
+    format: int64
+  cell_enable:
+    description: (1/0) - Enables/disables cellular connection
+    type: integer
+    format: int64
+  cell_auto_apn:
+    description: (1/0) - Enables/disables automatic APN selection
+    type: integer
+    format: int64
+  cell_apn:
+    description: Cellular APN (when automatic APN selection is disabled)
+    type: string
+  cell_user:
+    description: Cellular APN username
+    type: string
+  cell_pass:
+    description: Cellular APN password
+    type: string
+  cell_auth:
+    description: ('chap'/'pap') - Cellular authentication type
+    type: string
+  cell_reconn_delay:
+    description: (30-65535) - Reconnect delay (seconds)
+    type: integer
+    format: int64
+  cell_reconn_retries:
+    description: (0-65535) - Reconnect retried (0 = unlimited)
+    type: integer
+    format: int64
+  cell_metric:
+    description: (0-65535) - Sets cellular connection's priority relative to other connection's metrics
+    type: integer
+    format: int64
+  cell_mtu:
+    description: (68-1500) - Maximum Transition Unit (MTU)
+    type: integer
+    format: int64

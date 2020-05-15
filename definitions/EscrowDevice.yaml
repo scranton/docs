@@ -1,0 +1,13 @@
+title: Escrow Device
+description: Escrow devices represent devices that are being held temporarily on one account, and are expected to be transferred to another account.
+type: object
+properties:
+  unique_id:
+    description: The unique identifier of the device that will be created from this escrow device. Needs to follow the rules for device unique identifier. See documentation for devices.
+    type: string
+  token:
+    description: The token that uniquely identifies this escrow device record. The token must match the token stored on the device's file system according to the escrow device documentation. See documentation for escrow devices and device transfers.
+    type: string
+required:
+- unique_id
+- token

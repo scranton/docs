@@ -1,0 +1,14 @@
+title: RuleType
+type: string
+enum:
+- EqualRuleCondition
+- NotEqualRuleCondition
+- GreaterThanRuleCondition
+- GreaterThanEqualRuleCondition
+- LessThanRuleCondition
+- LessThanEqualRuleCondition
+- MaxTimeBetweenReportsRuleCondition
+- NearRuleCondition
+- NotNearRuleCondition
+- InRuleCondition
+- JoinCondition

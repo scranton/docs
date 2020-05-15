@@ -1,0 +1,21 @@
+title: Device Error Abilities
+description: Permissions for abilities pertaining to device errors.
+type: object
+properties:
+  create:
+    description: Ability to create device errors
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  read:
+    description: Ability to read device errors
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  update:
+    description: Ability to update device errors
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+  delete:
+    description: Ability to delete device errors
+    type: string
+    enum: [not_allowed, self, self_and_all_children]
+

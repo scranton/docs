@@ -1,0 +1,3083 @@
+swagger: "2.0"
+info:
+  title: platform
+  version: "1.0"
+  contact:
+    name: EdgeIQ
+    url: "https://edgeiq.io"
+  description: EdgeIQ API
+host: machineshopapi.com
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  "/commands/{id}/execute":
+    get:
+      tags:
+        - Commands
+      description: |
+        Executes a Command via an HTTP `GET`.  Fields that need to be merged into the Command can be added using "dot
+          notation" as query parameters.  The value of such a query parameter will get merged into the command at the
+          specified position within the structure.  For example, suppose the saved `payload` of a command looks like this:
+
+          ```json
+          {
+            "a": {
+              "b": {
+                "c": {
+                  "key1": "foo",
+                  "key2": "bar"
+                }
+              }
+            }
+          }
+          ```
+
+          If the following query string was appended to the `execute` request:
+
+          ```
+          ?payload.a.b.c.key2=bat&payload.a.b.c.key3=fuz&payload.a.b.c2=baz
+          ```
+
+          The query string values would be merged into the saved `payload` as follows:
+
+          ```json
+          {
+            "a": {
+              "b": {
+                "c": {
+                  "key1": "foo",
+                  "key2": "bat",
+                  "key3": "fuz
+                },
+                "c2": "baz"
+              }
+            }
+          }
+          ```
+
+          Although this example only shows merging into the `payload`, a value can be merged anywhere within the persisted
+          command structure, and will overwrite any value already present.  Also see
+          [this example](/examples/commands#same-example-using-query-params).
+      summary: Execute Command by ID
+      operationId: GET_commands_execute_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Command
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Commands
+      description: "  Executes a Command via an HTTP `POST`.  Fields that need to be merged into the Command can be added in one of two\n  ways:\n\n  1.  As a JSON object (when `Content-Type` is `application/json`) with fields defined at the appropriate level\n  of nesting.\n\n  1.  Using \"dot notation\" as form parameters (when `Content-Type` is `x-www-form-urlencoded`).  The value of such\n  a form parameter will get merged into the command at the specified position within the structure.  For example, suppose the saved `payload` of a command looks like this:\n\n  ```json\n  {\n    \"a\": {\n      \"b\":\n        \"c\": {\n          \"key1\": \"foo\",\n          \"key2\": \"bar\"\n        }\n      }\n    }\n  }\n  ```\n\n  If the following JSON document was sent as the `execute` request body:\n\n  ```json\n  {\n    \"a\": {\n      \"b\":\n        \"c\": {\n          \"key2\": \"bat\",\n          \"key3\": \"fuz\"\n        },\n        \"c2\": \"baz\"\n      }\n    }\n  }\n  ```\n\n  The JSON would be merged into the saved `payload` as follows:\n\n  ```json\n  {\n    \"a\": {\n      \"b\":\n        \"c\": {\n          \"key1\": \"foo\",\n          \"key2\": \"bat\",\n          \"key3\": \"fuz\n        },\n        \"c2\": \"baz\"\n      }\n    }\n  }\n  ```\n\n  When using form params, the exact same merged `payload` would be accomplished by providing keys in \"dot notation\",\n  with the same values:\n\n  ```\n  payload.a.b.c.key2=bat\n  payload.a.b.c.key3=fuz\n  payload.a.b.c2=baz\n  ```\n\n  Although this example only shows merging into the `payload`, a value can be merged anywhere within the persisted\n  command structure, and will overwrite any value already present.  Also see\n  [Command examples](/examples/commands)."
+      summary: Exec a Command
+      operationId: POST_commands_by_id
+      consumes:
+        - application/json
+        - x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Command.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Command
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/commands/{id}":
+    get:
+      tags:
+        - Commands
+      summary: Get Command by ID
+      operationId: GET_commands_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Command
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Commands
+      summary: Updates a Command
+      operationId: PUT_commands_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Command.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Command
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Commands
+      summary: Deletes a Command
+      operationId: DELETE_commands_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Command
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /commands:
+    get:
+      tags:
+        - Commands
+      summary: List all Commands visible to the authorized user.
+      operationId: GET_commands
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Commands
+      description: Creates a Command used to send outbound command data to one or more devices.
+      summary: Creates a Command
+      operationId: POST_commands
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Command.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /commands/bulk:
+    delete:
+      tags:
+        - Commands
+      summary: Deletes multiple Commands
+      operationId: DELETE_commands_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/companies/{id}":
+    get:
+      tags:
+        - Companies
+      summary: Get Company by ID
+      operationId: GET_companies_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Company
+      responses:
+        "200":
+          $ref: ../definitions/Company.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Companies
+      summary: Updates a Company
+      operationId: PUT_companies_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Company.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Company
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Companies
+      summary: Deletes a Company
+      operationId: DELETE_companies_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Company
+      responses:
+        "204":
+          $ref: ../definitions/Response_204.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /companies:
+    get:
+      tags:
+        - Companies
+      summary: List all Companies
+      operationId: GET_companies
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: ../definitions/Company.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Companies
+      description: "Creates a new customer account, attached as a sub-account to the currently authenticated user's company"
+      summary: Creates a Company
+      operationId: POST_companies
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Company.yaml
+      responses:
+        "201":
+          $ref: ../definitions/Response_201.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/device_configs/{id}":
+    get:
+      tags:
+        - Device Configs
+      summary: Get Device Config by ID
+      operationId: GET_device_configs_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Config
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Device Configs
+      summary: Updates a Device Config
+      operationId: PUT_device_configs_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/DeviceConfig.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Config
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Device Configs
+      summary: Deletes a Device Config
+      operationId: DELETE_device_configs_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Config
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /device_configs:
+    get:
+      tags:
+        - Device Configs
+      summary: List all Device Configs
+      operationId: GET_device_configs
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Device Configs
+      description: Device configurations describe the configuration attributes for each connection on a EdgeIQ Edge device.
+      summary: Creates a Device Config
+      operationId: POST_device_configs
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/DeviceConfig.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /device_configs/bulk:
+    delete:
+      tags:
+        - Device Configs
+      summary: Deletes multiple Device Configs
+      operationId: DELETE_device_configs_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/device_transfer_requests/{id}":
+    get:
+      tags:
+        - Device Transfer Requests
+      summary: Get Device Transfer Request by ID
+      operationId: GET_device_transfer_requests_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Transfer Request
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Device Transfer Requests
+      summary: Updates a Device Transfer Request
+      operationId: PUT_device_transfer_requests_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/DeviceTransferRequest.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Transfer Request
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Device Transfer Requests
+      summary: Deletes a Device Transfer Request
+      operationId: DELETE_device_transfer_requests_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Transfer Request
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /device_transfer_requests:
+    get:
+      tags:
+        - Device Transfer Requests
+      summary: List all Device Transfer Requests
+      operationId: GET_device_transfer_requests
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Device Transfer Requests
+      summary: Creates a Device Transfer Request
+      operationId: POST_device_transfer_requests
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/DeviceTransferRequest.yaml
+      responses:
+        "201":
+          $ref: ../definitions/Response_201.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /device_transfer_requests/bulk:
+    delete:
+      tags:
+        - Device Transfer Requests
+      summary: Deletes multiple Device Transfer Requests
+      operationId: DELETE_device_transfer_requests_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/device_types/{id}/rules/{rule_id}":
+    put:
+      tags:
+        - Device Types
+      summary: Attach Rule to Device Type
+      operationId: PUT_attach_rule_to_device_type
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Type
+        - name: rule_id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Rule
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Device Types
+      summary: Detach Rule from Device Type
+      operationId: DELETE_detach_rule_from_device_type
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Type
+        - name: rule_id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Rule
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/device_types/{id}/rules":
+    get:
+      tags:
+        - Device Types
+      summary: List Rule(s) on Device Type
+      operationId: GET_rules_on_device_type_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Type
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: ../definitions/Rule.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/device_types/{id}/list_edge_updates":
+    get:
+      tags:
+        - Device Types
+      summary: Get the list of available Edge software file URLs for a Device Type
+      operationId: GET_device_types_list_edge_updates_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Type
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              count:
+                description: The number of Edge update files available
+                type: integer
+              files:
+                description: List of Edge update file URLs
+                type: array
+                items:
+                  type: string
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/device_types/{id}/firmware":
+    get:
+      tags:
+        - Device Types
+      summary: Get the list of available firmware file URLs for a Device Type
+      operationId: GET_device_types_firmware_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Type
+      responses:
+        "200":
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              count:
+                description: The number of firmware files available
+                type: integer
+              files:
+                description: List of firmware file URLs
+                type: array
+                items:
+                  type: string
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/device_types/{id}":
+    get:
+      tags:
+        - Device Types
+      summary: Get Device Type by ID
+      operationId: GET_device_types_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Type
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Device Types
+      summary: Updates a Device Type
+      operationId: PUT_device_types_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/DeviceType.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Type
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Device Types
+      summary: Deletes a Device Type
+      operationId: DELETE_device_types_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device Type
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /device_types:
+    get:
+      tags:
+        - Device Types
+      summary: List all Device Types
+      operationId: GET_device_types
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Device Types
+      summary: Creates a Device Type
+      operationId: POST_device_types
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: ""
+          schema:
+            $ref: ../definitions/DeviceType.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /device_types/bulk:
+    delete:
+      tags:
+        - Device Types
+      summary: Deletes multiple Device Types
+      operationId: DELETE_device_types_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/devices/{id}/rules/{rule_id}":
+    put:
+      tags:
+        - Devices
+      summary: Attach Rule to Device
+      operationId: PUT_attach_rule_to_device
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device
+        - name: rule_id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Rule
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Devices
+      summary: Detach Rule from Device
+      operationId: DELETE_detach_rule_from_device
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device
+        - name: rule_id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Rule
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/devices/{id}/rules":
+    get:
+      tags:
+        - Devices
+      summary: List Rule(s) on Device
+      operationId: GET_rules_on_device_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: ../definitions/Rule.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/devices/{id}":
+    get:
+      tags:
+        - Devices
+      summary: Get Device by ID
+      operationId: GET_devices_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Devices
+      summary: Updates a Device
+      operationId: PUT_devices_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Device.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Devices
+      summary: Deletes a Device
+      operationId: DELETE_devices_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Device
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /devices/csv_bulk_download:
+    get:
+      tags:
+        - Devices
+      summary: "Download devices' info via CSV file."
+      operationId: GET_devices_csv_bulk_download
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /devices/csv_bulk_upload:
+    post:
+      tags:
+        - Devices
+      summary: Bulk Create/Edit/Delete devices via CSV file
+      operationId: POST_devices_csv_bulk_upload
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              device_csv_upload:
+                description: The CSV file data
+                type: file
+            required:
+              - device_csv_upload
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /devices/errors:
+    get:
+      tags:
+        - Devices
+      summary: List all devices with errors
+      operationId: GET_devices_errors
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /devices/locations:
+    get:
+      tags:
+        - Devices
+      summary: List all device locations
+      operationId: GET_devices_locations
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /devices/statuses_by_location:
+    get:
+      tags:
+        - Devices
+      summary: Get counts and names of devices by status by location
+      operationId: GET_devices_statuses_by_location
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /devices/statuses:
+    get:
+      tags:
+        - Devices
+      summary: Get counts and names of devices by status
+      operationId: GET_devices_statues
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /devices:
+    get:
+      tags:
+        - Devices
+      summary: List all Devices
+      operationId: GET_devices
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Devices
+      summary: Creates a Device
+      operationId: POST_devices
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Device.yaml
+      responses:
+        "201":
+          $ref: ../definitions/Response_201.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /devices/bulk:
+    delete:
+      tags:
+        - Devices
+      summary: Deletes multiple Devices
+      operationId: DELETE_devices_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Devices
+      summary: Creates multiple Devices
+      operationId: POST_devices_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDevice.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/downstream_systems/{id}":
+    get:
+      tags:
+        - DownstreamSystems
+      summary: Get downstream system by ID
+      operationId: GET_downstream_systems_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a downstream system
+      responses:
+        "200":
+          $ref: ../definitions/DownstreamSystem.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - DownstreamSystems
+      summary: Updates a downstream system
+      operationId: PUT_downstream_systems_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/DownstreamSystem.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a downstream system
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - DownstreamSystems
+      summary: Deletes a downstream system
+      operationId: DELETE_downstream_systems_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a downstream system
+      responses:
+        "204":
+          $ref: ../definitions/Response_204.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /downstream_systems:
+    get:
+      tags:
+        - DownstreamSystems
+      summary: List all Downstream systems
+      operationId: GET_downstream_systems
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: ../definitions/DownstreamSystem.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - DownstreamSystems
+      description: Creates a new downstream system
+      summary: Creates a downstream system
+      operationId: POST_downstream_systems
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/DownstreamSystem.yaml
+      responses:
+        "201":
+          $ref: ../definitions/Response_201.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/escrow_devices/{id}":
+    get:
+      tags:
+        - Escrow Devices
+      summary: Get Escrow Device by ID
+      operationId: GET_escrow_devices_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Escrow Device
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Escrow Devices
+      summary: Updates a Escrow Device
+      operationId: PUT_escrow_devices_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/EscrowDevice.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Escrow Device
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Escrow Devices
+      summary: Deletes a Escrow Device
+      operationId: DELETE_escrow_devices_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Escrow Device
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /escrow_devices:
+    get:
+      tags:
+        - Escrow Devices
+      summary: List all Escrow Devices
+      operationId: GET_escrow_devices
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Escrow Devices
+      summary: Creates a Escrow Device
+      operationId: POST_escrow_devices
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: ""
+          schema:
+            $ref: ../definitions/EscrowDevice.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /escrow_devices/bulk:
+    delete:
+      tags:
+        - Escrow Devices
+      summary: Deletes multiple Escrow Devices
+      operationId: DELETE_escrow_devices_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/gateway_commands/{id}":
+    get:
+      tags:
+        - Gateway Commands
+      summary: Get Gateway Command by ID
+      operationId: GET_gateway_commands_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Gateway Command
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Gateway Commands
+      summary: Updates a Gateway Command
+      operationId: PUT_gateway_commands_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/GatewayCommand.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Command
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Gateway Commands
+      summary: Deletes a Gateway Command
+      operationId: DELETE_gateway_commands_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Command
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /gateway_commands:
+    get:
+      tags:
+        - Gateway Commands
+      summary: List all Gateway Commands visible to the authorized user.
+      operationId: GET_gateway_commands
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Gateway Commands
+      description: Creates a Gateway Command and sends it to one or more devices.
+      summary: Creates a Gateway Command
+      operationId: POST_gateway_commands
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/GatewayCommand.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /gateway_commands/bulk:
+    post:
+      tags:
+        - Gateway Commands
+      summary: Creates multiple Gateway Commands
+      operationId: POST_gateway_commands_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkGatewayCommand.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Gateway Commands
+      summary: Deletes multiple Gateway Commands
+      operationId: DELETE_gateway_commands_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/ingestors/{id}":
+    get:
+      tags:
+        - Ingestors
+      summary: Get Ingestor by ID
+      operationId: GET_ingestors_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies an Ingestor
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Ingestors
+      summary: Updates an Ingestor
+      operationId: PUT_ingestors_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Ingestor.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies an Ingestor
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Ingestors
+      summary: Deletes an Ingestor
+      operationId: DELETE_ingestors_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies an Ingestor
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /ingestors:
+    get:
+      tags:
+        - Ingestors
+      summary: List all Ingestors
+      operationId: GET_ingestors
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Ingestors
+      description: "Ingestors are used to classify ingestors, which represent specific, addressable instances of that class of ingestor."
+      summary: Creates a Ingestor
+      operationId: POST_ingestors
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Ingestor.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /ingestors/bulk:
+    delete:
+      tags:
+        - Ingestors
+      summary: Deletes multiple Ingestors
+      operationId: DELETE_ingestors_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/integrations/{id}":
+    get:
+      tags:
+        - Integration
+      summary: Get Integration by ID
+      operationId: GET_integrations_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies an Integration
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Integration
+      summary: Updates an Integration
+      operationId: PUT_integrations_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Integration.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies an Integration
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Integration
+      summary: Deletes an Integration
+      operationId: DELETE_integrations_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies an Integration
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /integrations:
+    get:
+      tags:
+        - Integration
+      summary: List all Integrations
+      operationId: GET_integrations
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Integration
+      description: "Integrations are used to classify devices, which represent specific, addressable instances of that class of device."
+      summary: Creates an Integration
+      operationId: POST_integrations
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Integration.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /integrations/bulk:
+    delete:
+      tags:
+        - Integrations
+      summary: Deletes multiple Integrations
+      operationId: DELETE_integrations_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/reports/{id}":
+    get:
+      tags:
+        - Reports
+      summary: Get Report by ID
+      operationId: GET_report_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Report
+      responses:
+        "200":
+          description: The Report identified by the given ID
+          schema:
+            $ref: ../definitions/Report.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Reports
+      summary: Deletes a Report
+      operationId: DELETE_report_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Report
+      responses:
+        "204":
+          $ref: ../definitions/Response_204.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /reports:
+    get:
+      parameters:
+        - in: query
+          name: device_name
+          description: "Optional device name, the unique id of a device to get reports for."
+          type: string
+          required: false
+      tags:
+        - Reports
+      summary: List all Reports
+      operationId: GET_reports
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: A list of all reports
+          schema:
+            items:
+              $ref: ../definitions/Report.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Reports
+      description: "Reports are generally received from devices posting reports through EdgeIQ edge. However, in order to test, for instance, you are allowed to post reports through the API, using a valid device ID."
+      summary: Creates a Report
+      operationId: POST_reports
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Report.yaml
+      responses:
+        "201":
+          description: The newly created Report
+          schema:
+            $ref: ../definitions/Report.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /reports/bulk:
+    delete:
+      tags:
+        - Reports
+      summary: Deletes multiple Reports
+      operationId: DELETE_reports_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/rules/{id}/devices":
+    get:
+      tags:
+        - Rules
+      summary: Get devices for a rule
+      operationId: GET_devices_for_rule_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Rule
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: ../definitions/Device.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/rules/{id}":
+    get:
+      tags:
+        - Rules
+      summary: Get Rule by ID
+      operationId: GET_rules_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Rule
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Rules
+      summary: Updates a Rule
+      operationId: PUT_rules_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Rule.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Rule
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Rules
+      summary: Deletes a Rule
+      operationId: DELETE_rules_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Rule
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /rules:
+    get:
+      tags:
+        - Rules
+      summary: List all Rules
+      operationId: GET_rules
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Rules
+      description: "Rules are used to classify rules, which represent specific, addressable instances of that class of rule."
+      summary: Creates a Rule
+      operationId: POST_rules
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Rule.yaml
+      responses:
+        "201":
+          $ref: ../definitions/Response_201.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /rules/bulk:
+    delete:
+      tags:
+        - Rules
+      summary: Deletes multiple Rules
+      operationId: DELETE_rules_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /rules/conditions/types:
+    get:
+      tags:
+        - Rule Conditions
+      summary: Lists available rule conditions
+      operationId: GET_rule_conditions
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "403":
+          $ref: ../definitions/Response_403.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /rules/actions/types:
+    get:
+      tags:
+        - Rule Actions
+      summary: Lists available rule actions
+      operationId: GET_rule_actions
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "403":
+          $ref: ../definitions/Response_403.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/software_updates/{id}/files":
+    post:
+      tags:
+        - Software Updates
+      description: Adds files to a software update
+      summary: Add files to software update
+      operationId: POST_software_updates_files
+      consumes:
+        - x-www-form-urlencoded
+      produces:
+        - application/json
+      type: array
+      parameters:
+        - name: "files[]"
+          in: formData
+          type: array
+          description: An array of files
+          items:
+            type: string
+            format: binary
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    parameters:
+      - type: string
+        name: id
+        in: path
+        required: true
+        description: The ID that specifies a Software Update
+  "/software_updates/{id}":
+    get:
+      tags:
+        - Software Updates
+      summary: Get Software Update by ID
+      operationId: GET_software_updates_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Software Update
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Software Updates
+      summary: Updates a Software Update
+      operationId: PUT_software_updates_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/SoftwareUpdate.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Software Update
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Software Updates
+      summary: Deletes a Software Update
+      operationId: DELETE_software_updates_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Software Update
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /software_updates:
+    get:
+      tags:
+        - Software Updates
+      summary: List all Software Updates visible to the authorized user.
+      operationId: GET_software_updates
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Software Updates
+      description: Creates a Software Update used to send outbound command data to one or more devices.
+      summary: Creates a Software Update
+      operationId: POST_software_updates
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/SoftwareUpdate.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /software_updates/bulk:
+    delete:
+      tags:
+        - Software Updates
+      summary: Deletes multiple Software Updates
+      operationId: DELETE_software_updates_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/system_command_jobs/{id}":
+    get:
+      tags:
+        - SystemCommandJobs
+      summary: Get system command job by ID
+      operationId: GET_system_command_jobs_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a system command job
+      responses:
+        "200":
+          $ref: ../definitions/SystemCommandJob.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - SystemCommandJobs
+      summary: "System command jobs are immutable, and cannot be updated. This method will return 405 in all non-exception cases."
+      operationId: PUT_system_command_jobs_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a system command job
+      responses:
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "405":
+          $ref: ../definitions/Response_405.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - SystemCommandJobs
+      summary: Deletes a system command job
+      operationId: DELETE_system_command_jobs_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a system command job
+      responses:
+        "204":
+          $ref: ../definitions/Response_204.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /system_command_jobs:
+    get:
+      tags:
+        - SystemCommandJobs
+      summary: List all system command jobs
+      operationId: GET_system_command_jobs
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: ../definitions/SystemCommandJob.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - SystemCommandJobs
+      description: Creates a new system command job
+      summary: Creates a system command job
+      operationId: POST_system_command_jobs
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/SystemCommandJob.yaml
+      responses:
+        "201":
+          $ref: ../definitions/Response_201.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/system_commands/{id}":
+    get:
+      tags:
+        - SystemCommands
+      summary: Get system command by ID
+      operationId: GET_system_commands_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a system command
+      responses:
+        "200":
+          $ref: ../definitions/SystemCommand.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - SystemCommands
+      summary: Updates a system command
+      operationId: PUT_system_commands_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/SystemCommand.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a system command
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - SystemCommands
+      summary: Deletes a system command
+      operationId: DELETE_system_commands_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a system command
+      responses:
+        "204":
+          $ref: ../definitions/Response_204.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /system_commands:
+    get:
+      tags:
+        - SystemCommands
+      summary: List all system commands
+      operationId: GET_system_commands
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: ../definitions/SystemCommand.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - SystemCommands
+      description: Creates a new system command
+      summary: Creates a system command
+      operationId: POST_system_commands
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/SystemCommand.yaml
+      responses:
+        "201":
+          $ref: ../definitions/Response_201.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/translators/{id}":
+    get:
+      tags:
+        - Translators
+      summary: Get Translator by ID
+      operationId: GET_translators_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Translator
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Translators
+      summary: Updates a Translator
+      operationId: PUT_translators_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Translator.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Translator
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Translators
+      summary: Deletes a Translator
+      operationId: DELETE_translators_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a Translator
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /translators:
+    get:
+      tags:
+        - Translators
+      summary: List all Translators
+      operationId: GET_translators
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Translators
+      description: "Translators are used to classify translators, which represent specific, addressable instances of that class of translator."
+      summary: Creates a Translator
+      operationId: POST_translators
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/Translator.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /translators/bulk:
+    delete:
+      tags:
+        - Translators
+      summary: Deletes multiple Translators
+      operationId: DELETE_translators_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/user_types/{id}":
+    get:
+      tags:
+        - User Types
+      summary: Get User Type by ID
+      operationId: GET_user_types_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a User Type
+      responses:
+        "200":
+          $ref: ../definitions/UserType.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - User Types
+      summary: Updates a User Type
+      operationId: PUT_user_types_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/UserType.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a User Type
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - User Types
+      summary: Deletes a User Type
+      operationId: DELETE_user_types_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a User Type
+      responses:
+        "204":
+          $ref: ../definitions/Response_204.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /user_types:
+    get:
+      tags:
+        - User Types
+      summary: List all User Types
+      operationId: GET_user_types
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: ../definitions/UserType.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - User Types
+      description: "Creates a new customer account, attached as a sub-account to the currently authenticated user's company"
+      summary: Creates a User Type
+      operationId: POST_user_types
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/UserType.yaml
+      responses:
+        "201":
+          $ref: ../definitions/Response_201.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  "/users/{id}":
+    get:
+      tags:
+        - Users
+      summary: Get User by ID
+      operationId: GET_users_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a User
+      responses:
+        "200":
+          $ref: ../definitions/User.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    put:
+      tags:
+        - Users
+      summary: Updates a User
+      operationId: PUT_users_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/User.yaml
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a User
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    delete:
+      tags:
+        - Users
+      summary: Deletes a User
+      operationId: DELETE_users_by_id
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: The ID that specifies a User
+      responses:
+        "204":
+          $ref: ../definitions/Response_204.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /users:
+    get:
+      tags:
+        - Users
+      summary: List all Users
+      operationId: GET_users
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: ../definitions/User.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+    post:
+      tags:
+        - Users
+      description: Users describe the accounts of users of the system.
+      summary: Creates a User
+      operationId: POST_users
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/User.yaml
+      responses:
+        "201":
+          $ref: ../definitions/Response_201.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /users/bulk:
+    delete:
+      tags:
+        - Users
+      summary: Deletes multiple Users
+      operationId: DELETE_users_bulk
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: ../definitions/BulkDelete.yaml
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+  /me:
+    get:
+      tags:
+        - Users
+      summary: Returns current user
+      operationId: GET_users_bulk
+      produces:
+        - application/json
+      responses:
+        "200":
+          $ref: ../definitions/Response_200.yaml
+        "401":
+          $ref: ../definitions/Response_401.yaml
+        "404":
+          $ref: ../definitions/Response_404.yaml
+        "500":
+          $ref: ../definitions/Response_500.yaml
+basePath: /api/v1/platform
+securityDefinitions:
+  BasicAuth:
+    type: apiKey
+    in: header
+    name: Authorization
+security:
+  - BasicAuth: []
+definitions: {}

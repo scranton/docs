@@ -1,0 +1,26 @@
+properties:
+  command_type:
+    description: The type of command.
+    type: string
+  payload:
+    description: The payload that is sent to the device. Not all commands require a payload.
+    type: object
+  schedule:
+    $ref: GatewayCommandSchedule.yaml
+  timeout:
+    description: The number of seconds before the command will be aborted.
+    type: integer
+  statuses:
+    description: The status of the command execution. Each device associated with the command will have it's own key
+      in the status map.
+    type: object
+  device_id:
+    description: The _id of the device that will receive the command.
+    type: string
+  software_update_id:
+    description: The _id of the software update to use for the command. This value is only required when issuing a
+      software_update command.
+    type: string
+  attached_device_ids:
+    description: Allows for targeting specific attached device _id's via the gateway device.
+    type: array

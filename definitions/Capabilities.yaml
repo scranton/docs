@@ -1,0 +1,21 @@
+title: Capabilities
+description: Capabilities allow Device Types with gateway capabilities to self document what the gateway provides for interfaces, etc.
+type: object
+properties:
+  network_connections:
+    description: A list of network interface definitions
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          description: Interface type ('ethernet-wan', 'ethernet-lan', 'wifi', 'cellular')
+          type: string
+        name:
+          description: Interface name (i.e. 'eth0', 'eth1', 'wlan0', 'wwan0', etc.)
+          type: string
+  active:
+    description: Indicates whether or not the Device Type is available.
+    type: boolean
+required:
+- network_connections

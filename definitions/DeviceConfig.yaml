@@ -1,0 +1,18 @@
+title: DeviceConfig
+description: A configuration for a device.
+type: object
+properties:
+  name:
+    description: A unique name or identifier for this configuration group.
+    type: string
+  device_type_id:
+    description: The _id of the Device Type associated with the configuration.
+    type: string
+  connections:
+    description: An array of the connection configurations.
+    type: array
+    items:
+      $ref: Connection.yaml
+required:
+- name
+- connections

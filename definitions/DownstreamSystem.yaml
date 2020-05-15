@@ -1,0 +1,13 @@
+title: DownstreamSystem
+description: Downstream systems are systems to which commands may be sent
+type: object
+properties:
+  name:
+    description: The name of the downstream system
+    type: string
+  description:
+    description: A description of the system
+    type: string
+required:
+- name
+

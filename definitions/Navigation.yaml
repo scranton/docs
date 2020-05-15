@@ -1,0 +1,43 @@
+title: Navigation
+description: Controls the visibility of navigation elements in the portal.
+type: object
+properties:
+  action_hub_hidden:
+    description: Whether the action hub of the portal should be hidden from navigation
+    type: boolean
+  onboarding_hidden:
+    description: Whether the onboarding section of the portal should be hidden from navigation
+    type: boolean
+  overview_hidden:
+    description: Whether the overview section of the portal should be hidden from navigation
+    type: boolean
+  messages_hidden:
+    description: Whether the messages section of the portal should be hidden from navigation
+    type: boolean
+  alerts_hidden:
+    description: Whether the alerts section of the portal should be hidden from navigation
+    type: boolean
+  lifecycle_hidden:
+    description: Whether the lifecycle section of the portal should be hidden from navigation
+    type: boolean
+  devices_hidden:
+    description: Whether the devices section of the portal should be hidden from navigation
+    type: boolean
+  rules_hidden:
+    description: Whether the rules section of the portal should be hidden from navigation
+    type: boolean
+  software_hidden:
+    description: Whether the software section hub of the portal should be hidden from navigation
+    type: boolean
+  integrations_hidden:
+    description: Whether the integrations section of the portal should be hidden from navigation
+    type: boolean
+  users_hidden:
+    description: Whether the users section of the portal should be hidden from navigation
+    type: boolean
+  roles_hidden:
+    description: Whether the roles section of the portal should be hidden from navigation
+    type: boolean
+  companies_hidden:
+    description: Whether the accounts section of the portal should be hidden from navigation
+    type: boolean

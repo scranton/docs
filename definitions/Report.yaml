@@ -1,0 +1,26 @@
+title: Report
+description: Report coming from a Device.
+type: object
+properties:
+  device_id:
+    description: The database's unique id for this Device.
+    type: string
+  device_name:
+    description: The user defined unique identifier for this Device.
+    type: string
+  device_datetime:
+    description: A date and time string representing the time at which the device created the report. Multiple formats are supported. UTC is assumed if timezone is not provided.
+    type: string
+  created_at:
+    description: The server time at which the report was created in the API.
+    type: string
+  payload:
+    description: The user portion of the report. All the key value pairs specific to you device are contained here.
+    type: object
+  seq:
+    description: Currently unused
+    type: number
+required:
+- device_id
+- device_datetime
+- payload

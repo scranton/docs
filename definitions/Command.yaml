@@ -1,0 +1,30 @@
+properties:
+  name:
+    description: The name of the command.
+    type: string
+  device_id:
+    description: The id of the device to which this command will be sent.  This may be omitted until the command
+      is executed.
+    type: string
+  sender_type:
+    description: The type of sender used to send the command.
+    type: string
+  sender:
+    description: The sender (as specified by sender_type) used to send the command.
+    type: object
+  translator_id:
+    description: The id of the translator used to translate the command payload into the data format expected by the
+      recipient device.  This can be omitted if a translator is not needed to process and send the command.
+    type: string
+  long_description:
+    description: A long description of the command.  This field is intended to be populated with instructions on
+      how to send the command.  These instructions can then be displayed to users of an application.
+    type: string
+  options:
+    description: A JSON object containing metadata needed to process and send the command.  This field is not used by
+      commands sent directly by Edge (but may optionally be used by REST Command forwarders and plugins).
+    type: object
+  payload:
+    description: A JSON object containing all of the data that will comprise the actual message sent to the recipient
+      device.  This payload is the input to the translator.
+    type: object

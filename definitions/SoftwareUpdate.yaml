@@ -1,0 +1,16 @@
+properties:
+  name:
+    description: The name of the software update
+    type: string
+  device_type_id:
+    description: The _id of the device type to associate the update with.
+    type: object
+  files:
+    description: The list of files associated with the update.
+    type: array
+  script:
+    description: The script used to run the update.
+    type: string
+  reboot:
+    description: A flag to trigger a reboot of the system after the update is applied.
+    type: boolean

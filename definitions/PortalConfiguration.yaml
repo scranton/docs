@@ -1,0 +1,10 @@
+title: Portal Configuration
+description: Company configuration of the EdgeIQ portal
+type: object
+properties:
+  navigation:
+    type: object
+    $ref: Navigation.yaml
+  widgets:
+    type: object
+    $ref: Widgets.yaml

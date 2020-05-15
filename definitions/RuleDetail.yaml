@@ -1,0 +1,25 @@
+title: RuleDetail
+description: A rule may be attached to a Device to have a condition applied to all Reports coming from that Device. If the condition is met, the then_actions are performed. If not, the else_actions are executed. Delayed_actions will be executed if the downstream Rule's condition is met and this Rule's condition are met.
+type: object
+properties:
+  description:
+    description: The general description for users.
+    type: string
+  condition:
+    description: The rule condition that will be evaluated.
+    $ref: RuleCondition.yaml
+  then_actions:
+    description: The rule actions that will be executed if the rule condition evaluates to true.
+    type: array
+    items:
+      $ref: RuleAction.yaml
+  else_actions:
+    description: The rule actions that will be executed if the rule condition evaluates to false.
+    type: array
+    items:
+      $ref: RuleAction.yaml
+  active:
+    description: Indicates if the rule is active.
+    type: boolean
+required:
+- description

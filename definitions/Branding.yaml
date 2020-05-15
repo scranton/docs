@@ -1,0 +1,16 @@
+title: Branding
+description: Branding information for companies
+type: object
+properties:
+  logo_url:
+    description: URL to company logo
+    type: string
+  icon_url:
+    description: URL to company icon, smaller than logo, and suited for icon display
+    type: string
+  primary_color:
+    description: The primary branding color of the company, as an hex HTML color, e.g. `#FFFFFF`.
+    type: string
+  logo_background_color:
+    description: Color used behind company logo. If blank, white, or `#FFFFFF`, will be used.
+    type: string

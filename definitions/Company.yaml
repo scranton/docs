@@ -1,0 +1,37 @@
+title: Company
+description: A company defines a company account in the EdgeIQ system
+type: object
+properties:
+  _id:
+    description: The unique identifier of the company. Assigned at creation, uneditable. Must by unique across system.
+    type: string
+  company_id:
+    description: The unique identifier of the company which owns this company. For companies with a direct relationship to EdgeIQ this will be `machineshop`. For company accounts belonging to another company, this will be the owning company's id.
+    type: string
+  user_id:
+    description: The user id that created the company. Present only for backwards compatibility.
+    type: string
+  name:
+    description: The name of the company
+    type: string
+  branding:
+    type: object
+    $ref: Branding.yaml
+  aliases:
+    type: object
+    $ref: Aliases.yaml
+  portal_configuration:
+    type: object
+    $ref: PortalConfiguration.yaml
+  metadata:
+    type: object
+    description: This field is a way to store an untyped, key-value, user defined data.
+  user_ids:
+    description: Ids of users belong to this company
+    type: array
+  view_abilities:
+    type: object
+    description: Deprecated. Unused.
+required:
+- _id
+- name
